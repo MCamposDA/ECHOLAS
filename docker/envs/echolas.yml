@@ -1,0 +1,48 @@
+# =============================================================================
+# ECHOLAS — single consolidated conda environment
+# =============================================================================
+# All bioinformatics tools your pipeline uses, pinned to the versions declared
+# in your modules/*.nf files. This env is created at IMAGE BUILD time, not at
+# pipeline runtime, so a fresh `docker compose up` runs the pipeline in seconds
+# instead of waiting for conda to download ~2GB of dependencies.
+#
+# Versions match the `conda` directives in:
+#   modules/trimming_qc.nf       (fastqc, trimmomatic, fastp)
+#   modules/alignment_variant.nf (bwa, samtools, gatk4, picard)
+#   modules/genotyping.nf        (gatk4, bcftools)
+#   modules/variant_filtering.nf (bcftools, gatk4)
+#   modules/pca_phylogeny.nf     (plink, r-base + r packages, bcftools, iqtree)
+# =============================================================================
+
+name: echolas
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  # --- Quality control & trimming (Module 1) ---
+  - fastqc=0.12.1
+  - trimmomatic=0.40
+  - fastp=1.0.1
+
+  # --- Alignment + variant calling (Module 2) ---
+  - bwa=0.7.18
+  - samtools=1.21
+  - gatk4=4.6.2.0
+  - picard=3.1.1
+
+  # --- Joint genotyping + filtering (Modules 3 & 4) ---
+  - bcftools=1.19
+
+  # --- PCA + phylogeny (Module 5) ---
+  - plink=1.9
+  - iqtree=2.3.6
+  - r-base=4.3.3
+  - r-ggplot2>=3.4
+  - r-readr>=2.1
+  - r-dplyr>=1.1
+
+  # --- Shell helpers used by your bash scripts ---
+  - coreutils
+  - gzip
+  - unzip

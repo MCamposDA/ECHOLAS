@@ -1,0 +1,15 @@
+# .dockerignore — tells Docker which files NOT to copy into the image.
+# Without this, every `docker build` would haul 10+GB of FASTQ files into
+# the build context, slowing things to a crawl.
+
+raw_data/
+reference/
+results/
+work/
+.nextflow*
+*.fastq.gz
+*.bam
+*.vcf.gz
+.git/
+node_modules/
+__pycache__/

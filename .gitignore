@@ -1,0 +1,15 @@
+# Runtime data — never commit these
+raw_data/
+reference/*.fna
+reference/*.fasta
+reference/*.fa
+reference/*.fna.*
+reference/*.dict
+results/
+work/
+.nextflow/
+.nextflow.log*
+
+# OS junk
+.DS_Store
+Thumbs.db

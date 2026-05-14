@@ -1,0 +1,32 @@
+# docker-compose.yml
+# -----------------------------------------------------------------------------
+# This file is a shortcut: instead of typing a long `docker run …` command,
+# you just type `docker compose up` in this folder and everything starts.
+#
+# It tells Docker:
+#   * which image to use (the one we build from the Dockerfile)
+#   * which folder on YOUR computer to map into the container
+#   * which port to expose to your browser
+# -----------------------------------------------------------------------------
+
+services:
+  echolas:
+    build: .
+    image: echolas:latest
+    container_name: echolas
+    ports:
+      # host:container — open localhost:8080 in your browser.
+      - "8080:8080"
+    volumes:
+      # Mount your pipeline project into /data inside the container.
+      # Change "./" to a different path if your main.nf lives elsewhere.
+      - ./:/data
+    environment:
+      ECHOLAS_PROJECT: /data
+    # Give it enough resources for a real run (~7h pipeline)
+    deploy:
+      resources:
+        limits:
+          cpus: "8"
+          memory: "16G"
+    restart: unless-stopped
