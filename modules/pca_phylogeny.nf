@@ -172,7 +172,7 @@ workflow PCA_PHYLOGENY {
 
     script_pca    = Channel.fromPath("scripts/run_pca.sh")
     script_plot   = Channel.fromPath("scripts/plot_pca.R")
-    script_fasta  = Channel.fromPath("scripts/vcf_generate_fasta.sh")
+    script_fasta  = Channel.fromPath("scripts/vcf_generate_fasta2.sh")
     script_header = Channel.fromPath("scripts/fasta_header.adjust.sh")
     script_concat = Channel.fromPath("scripts/concat_chr.sh")
 
@@ -180,7 +180,14 @@ workflow PCA_PHYLOGENY {
     // REFERÊNCIA
     ////////////////////////////////////////////////////
 
-    ref = Channel.fromPath("reference/GCF_000002845.2_ASM284v2_genomic.fna")
+    ref_files = file("reference/*.{fna,fa,fasta}", checkIfExists: false)
+    if (ref_files.size() == 0) {
+        error "No reference genome found in reference/ (expected a .fna, .fa or .fasta file)"
+    }
+    if (ref_files.size() > 1) {
+        error "Multiple reference genomes found in reference/ (${ref_files*.name}) — keep only one .fna/.fa/.fasta file"
+    }
+    ref = Channel.value(ref_files[0])
     indexed_ref = INDEX_REF(ref)
 
     ////////////////////////////////////////////////////

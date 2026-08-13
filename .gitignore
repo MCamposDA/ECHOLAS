@@ -1,10 +1,8 @@
-# Runtime data — never commit these
-raw_data/
-reference/*.fna
-reference/*.fasta
-reference/*.fa
-reference/*.fna.*
-reference/*.dict
+# Runtime data — never commit these (folders kept as scaffolding via README.md below)
+raw_data/*
+!raw_data/README.md
+reference/*
+!reference/README.md
 results/
 work/
 .nextflow/
