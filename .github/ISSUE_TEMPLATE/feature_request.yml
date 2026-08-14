@@ -1,0 +1,35 @@
+name: Feature request
+description: Suggest a new capability, pipeline step, or improvement
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the limitation or gap you're running into. Concrete examples help more than abstract descriptions.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: What would you like to see happen? If it touches the pipeline, note which module (trimming/QC, alignment/variant calling, genotyping, filtering, PCA/phylogeny) it would belong to.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any other approaches or workarounds you've tried or considered.
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Anything else — links, references, screenshots.
+    validations:
+      required: false
