@@ -6,7 +6,7 @@
 ![Nextflow](https://img.shields.io/badge/nextflow-DSL2-informational.svg)
 ![Docker](https://img.shields.io/badge/docker-ready-2496ED.svg)
 
-A Nextflow DSL2 pipeline that takes raw short-read sequencing data, calls variants against a reference genome, and produces a PCA + maximum-likelihood phylogeny of the input strains. It ships pre-tuned for *Leishmania braziliensis* (M2904, `GCF_000002845.2_ASM284v2`), but the reference genome is a drop-in — any assembly you place in `reference/` is picked up automatically, so the same pipeline works for other *Leishmania* species or other haploid/near-haploid organisms.
+A Nextflow DSL2 pipeline that takes raw short-read sequencing data, calls variants against a reference genome, and produces a PCA + maximum-likelihood phylogeny of the input strains. It ships pre-tuned for *Leishmania braziliensis* (M2904, `GCF_000002845.2_ASM284v2`), but the reference genome is a drop-in — any assembly you place in `reference/` is picked up automatically, so the same pipeline works for other *Leishmania* species or any other diploid organism (variant calling is fixed at `--ploidy 2` in `HAPLOTYPE_CALLER`).
 
 On top of the pipeline itself, this repo ships a **web dashboard** (`ECHOLAS-standalone.html`) and a **Docker image**, so you can run the whole thing — trimming, alignment, joint genotyping, filtering, PCA, and tree building — without installing a dozen bioinformatics tools by hand.
 
