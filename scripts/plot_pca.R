@@ -22,9 +22,9 @@ pc1_var <- round(eigval[1] / sum(eigval) * 100, 1)
 pc2_var <- round(eigval[2] / sum(eigval) * 100, 1)
 
 # ler PCA
-pca <- read_table2(
+pca <- read_table(
   eigenvec,
-  col_names = c("FID","IID","PC1","PC2","PC3","PC4","PC5","PC6","PC7")
+  col_names = c("FID","IID","PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9","PC10")
 )
 
 # plot
@@ -33,7 +33,7 @@ p <- ggplot(pca, aes(x = PC1, y = PC2, label = IID)) +
   geom_text(vjust = -0.8, size = 3.5) +
   theme_bw() +
   labs(
-    title = "PCA of Leishmania braziliensis strains",
+    title = "PCA of E.coli strains",
     x = paste0("PC1 (", pc1_var, "%)"),
     y = paste0("PC2 (", pc2_var, "%)")
   )

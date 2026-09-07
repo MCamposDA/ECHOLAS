@@ -70,13 +70,13 @@ BEGIN{
 
         allele="N"
 
-        if(gt=="0/0" || gt=="0|0"){
+        if(gt=="0/0" || gt=="0|0" || gt=="0"){
 
             allele=ref
 
         }
 
-        else if(gt=="1/1" || gt=="1|1"){
+        else if(gt=="1/1" || gt=="1|1" || gt=="1"){
 
             allele=alts[1]
 
@@ -101,7 +101,7 @@ BEGIN{
 
         }
 
-        else if(gt=="./." || gt==".|."){
+        else if(gt=="./." || gt==".|." || gt=="."){
 
             allele="N"
 

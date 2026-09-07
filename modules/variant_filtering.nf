@@ -93,7 +93,7 @@ process SNP_FILTER_PHYLO {
     script:
     """
     bcftools view \
-      -i 'GT="1/1"' \
+      -i 'GT="1"' \
       -Oz \
       -o strain_snps_Fphylo.vcf.gz \
       $vcf
@@ -223,10 +223,10 @@ workflow VARIANT_FILTERING {
 
     take:
     joint_vcf
+    ref
 
     main:
 
-    ref = Channel.fromPath("reference/GCF_000002845.2_ASM284v2_genomic.fna")
     indexed_ref = INDEX_REF(ref)
 
     snps_raw = SNP_EXTRACTION(joint_vcf)

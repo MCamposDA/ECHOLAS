@@ -155,14 +155,13 @@ workflow GENOTYPING {
 
     take:
     gvcfs
+    ref
 
     main:
 
     ////////////////////////////////////////////////////
     // REFERÊNCIA (AGORA CORRETA)
     ////////////////////////////////////////////////////
-
-    ref = Channel.fromPath("reference/GCF_000002845.2_ASM284v2_genomic.fna")
 
     indexed_ref = INDEX_REF(ref)
 

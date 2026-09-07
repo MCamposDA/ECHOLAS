@@ -61,7 +61,7 @@ process TRIM_PE_CONSERVATIVE {
     conda "bioconda::trimmomatic=0.40"
     publishDir "results/trimmed/pe_conservative", mode: 'copy'
     cpus 2
-    memory '7 GB'
+    memory '3 GB'
 
     input:
     tuple val(sample), path(r1), path(r2)
@@ -73,7 +73,7 @@ process TRIM_PE_CONSERVATIVE {
     """
     trimmomatic PE \
       -threads ${task.cpus} \
-      -Xmx6G \
+      -Xmx2G \
       $r1 $r2 \
       ${sample}_R1_paired.fastq.gz ${sample}_R1_unpaired.fastq.gz \
       ${sample}_R2_paired.fastq.gz ${sample}_R2_unpaired.fastq.gz \

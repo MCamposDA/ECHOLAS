@@ -6,7 +6,7 @@ include { INDEX_REF } from './alignment_variant.nf'
 
 process RUN_PCA {
 
-    conda "bioconda::plink=1.9 bioconda::r-base r-ggplot2 r-readr r-dplyr"
+    conda "bioconda::plink=1.9 r-base r-ggplot2 r-readr r-dplyr"
     publishDir "results/pca", mode: 'copy'
 
     input:
@@ -163,6 +163,7 @@ workflow PCA_PHYLOGENY {
     take:
     vcf_pca
     vcf_phylo
+    ref
 
     main:
 
@@ -180,14 +181,6 @@ workflow PCA_PHYLOGENY {
     // REFERÊNCIA
     ////////////////////////////////////////////////////
 
-    ref_files = file("reference/*.{fna,fa,fasta}", checkIfExists: false)
-    if (ref_files.size() == 0) {
-        error "No reference genome found in reference/ (expected a .fna, .fa or .fasta file)"
-    }
-    if (ref_files.size() > 1) {
-        error "Multiple reference genomes found in reference/ (${ref_files*.name}) — keep only one .fna/.fa/.fasta file"
-    }
-    ref = Channel.value(ref_files[0])
     indexed_ref = INDEX_REF(ref)
 
     ////////////////////////////////////////////////////

@@ -31,7 +31,7 @@ process ALIGN_SORT {
     publishDir "results/alignments", mode: 'copy'
 
     cpus 4
-    memory '4 GB'
+    memory '3 GB'
 
     input:
     tuple val(sample), path(reads)
@@ -172,7 +172,7 @@ process HAPLOTYPE_CALLER {
       -I $bam \
       -O gvcf/${sample}.g.vcf.gz \
       -ERC GVCF \
-      --ploidy 2 \
+      --ploidy 1 \
       --native-pair-hmm-threads ${task.cpus}
     """
 }
@@ -205,17 +205,9 @@ workflow ALIGNMENT_VARIANT {
 
     take:
     trimmed_reads
+    ref
 
     main:
-
-    ref_files = file("reference/*.{fna,fa,fasta}", checkIfExists: false)
-    if (ref_files.size() == 0) {
-        error "No reference genome found in reference/ (expected a .fna, .fa or .fasta file)"
-    }
-    if (ref_files.size() > 1) {
-        error "Multiple reference genomes found in reference/ (${ref_files*.name}) — keep only one .fna/.fa/.fasta file"
-    }
-    ref = Channel.value(ref_files[0])
 
     indexed_ref = INDEX_REF(ref)
 

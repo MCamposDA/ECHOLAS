@@ -16,6 +16,7 @@ include { PCA_PHYLOGENY } from './modules/pca_phylogeny.nf'
 
 params.mode = params.mode ?: "AUTO"
 
+
 ////////////////////////////////////////////////////
 //// WORKFLOW PRINCIPAL
 ////////////////////////////////////////////////////
@@ -25,6 +26,10 @@ workflow {
     ////////////////////////////////////////////////////
     // INPUT
     ////////////////////////////////////////////////////
+
+   ref = Channel
+    .fromPath(params.reference, checkIfExists: true)
+    .first()
 
     reads = Channel
         .fromPath("raw_data/*.fastq.gz")
@@ -49,27 +54,37 @@ workflow {
     // MÓDULO 2 — ALIGNMENT + GVCF
     ////////////////////////////////////////////////////
 
-    alignment_out = ALIGNMENT_VARIANT(trimming_out.trimmed_reads)
+    alignment_out = ALIGNMENT_VARIANT(
+    trimming_out.trimmed_reads,
+    ref
+)
 
     ////////////////////////////////////////////////////
     // MÓDULO 3 — GENOTYPING
     ////////////////////////////////////////////////////
 
-    genotyped = GENOTYPING(alignment_out.gvcfs)
+    genotyped = GENOTYPING(
+    alignment_out.gvcfs,
+    ref
+)
 
     ////////////////////////////////////////////////////
     // MÓDULO 4 - VARIANT_FILTERING
     ///////////////////////////////////////////////////
 
-    variant_filtering = VARIANT_FILTERING(genotyped)
+    variant_filtering = VARIANT_FILTERING(
+    genotyped,
+    ref
+)
 
     ////////////////////////////////////////////////////
     // MÓDULO 5 - PCA_PHYLOGENY     
     ///////////////////////////////////////////////////
 
     pca_phylo = PCA_PHYLOGENY(
-        variant_filtering.vcf_pca,
-        variant_filtering.vcf_phylo
-    )
+    variant_filtering.vcf_pca,
+    variant_filtering.vcf_phylo,
+    ref
+)
 
 }
