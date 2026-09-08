@@ -205,19 +205,9 @@ workflow ALIGNMENT_VARIANT {
 
     take:
     trimmed_reads
+    indexed_ref
 
     main:
-
-    ref_files = file("reference/*.{fna,fa,fasta}", checkIfExists: false)
-    if (ref_files.size() == 0) {
-        error "No reference genome found in reference/ (expected a .fna, .fa or .fasta file)"
-    }
-    if (ref_files.size() > 1) {
-        error "Multiple reference genomes found in reference/ (${ref_files*.name}) — keep only one .fna/.fa/.fasta file"
-    }
-    ref = Channel.value(ref_files[0])
-
-    indexed_ref = INDEX_REF(ref)
 
     ////////////////////////////////////////////////////
     // NORMALIZAÇÃO DA ENTRADA

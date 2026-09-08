@@ -1,5 +1,3 @@
-include { INDEX_REF } from './alignment_variant.nf'
-
 process SNP_EXTRACTION {
 
     conda "bioconda::bcftools=1.19"
@@ -223,11 +221,9 @@ workflow VARIANT_FILTERING {
 
     take:
     joint_vcf
+    indexed_ref
 
     main:
-
-    ref = Channel.fromPath("reference/GCF_000002845.2_ASM284v2_genomic.fna")
-    indexed_ref = INDEX_REF(ref)
 
     snps_raw = SNP_EXTRACTION(joint_vcf)
     snps_filtered = SNP_FILTER_STRICT(snps_raw.vcf)
